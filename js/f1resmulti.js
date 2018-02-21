@@ -63,6 +63,17 @@
           columns: resCols
       };
 
+      //Placeholder for development of qualifying results - cols array
+      var qualCols = [];
+
+      //Placeholder for development of qualifying results - schema
+      var qualSchema = {};
+
+      //ProtoURL for getting the qualifying data
+      //"http://ergast.com/api/f1/" + yr + "/qualifying.json?limit=1000";
+      //Also a potential URL for pitstops
+      //"http://ergast.com/api/f1/" + yr + "/" + round + "/pitstops?limit=1000"
+      
       //The schemaCallback gets called when the schema is defined.
       //The schemaCallback takes an array of table objects - the raceSchema and resSchema - and lets Tableau know the tables are ready
       schemaCallback([raceSchema, resSchema]);
@@ -88,7 +99,7 @@
       //For every year between the defined start and end years (inclusive), call the getResultsPromise functions
       //This will push the data into the promises array defined above
       for(s=syr, e=eyr; s <= e; s++) {
-        tableau.log("GET DATA - " + table.tableInfo.id);
+        //tableau.log("GET DATA - " + table.tableInfo.id);
         promises.push(getResultsPromise(table,s));
       }
 
@@ -134,7 +145,7 @@
                       };//entry
 
                       if (table.tableInfo.id =="f1races"){
-                        tableau.log(i + " - RAC " + racerecord.raceName + " - " + racerecord.season + " - " + racerecord.round);
+                        //tableau.log(i + " - RAC " + racerecord.raceName + " - " + racerecord.season + " - " + racerecord.round);
                         toRet.push(raceentry)
                       }
 
