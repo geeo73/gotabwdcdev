@@ -15,15 +15,16 @@
       //The id can only contain alphanumeric values (a-z, A-Z, 0-9) and underscore characters (_).
       //The identifiers cannot contain spaces, hyphens, or special characters. For more options, see the API reference.
       var raceCols = [
-        { id: "season", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
-        { id: "round", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
+        { id: "season", alias: "F1 Season", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
+        { id: "round", alias: "Round", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
         { id: "racename", alias: "Race", dataType: tableau.dataTypeEnum.string },
         { id: "racedate", alias: "Race Date", dataType: tableau.dataTypeEnum.date },
+        { id: "circuitid", alias: "Circuit ID", dataType: tableau.dataTypeEnum.string },
         { id: "circuitname", alias: "Ciruit Name", dataType: tableau.dataTypeEnum.string },
         { id: "lat", alias: "Circuit Latitude", columnRole: tableau.columnRoleEnum.dimension, dataType: tableau.dataTypeEnum.float },
         { id: "lon", alias: "Circuit Longitude", columnRole: tableau.columnRoleEnum.dimension, dataType: tableau.dataTypeEnum.float },
-        { id: "country", dataType: tableau.dataTypeEnum.string },
-        { id: "locality", dataType: tableau.dataTypeEnum.string },
+        { id: "country", alias: "Circuit Country", dataType: tableau.dataTypeEnum.string },
+        { id: "locality",  alias: "Circuit Locality", dataType: tableau.dataTypeEnum.string },
         { id: "url", alias: "Circuit Wiki URL", dataType: tableau.dataTypeEnum.string }
       ];
 
@@ -31,14 +32,14 @@
       //Here, the value of the  columns property is set to the raceCols array defined earlier.
       var raceSchema = {
           id: "f1races",
-          alias: "Formula 1 Season Races",
+          alias: "Formula 1 Season Race Information",
           columns: raceCols
       };
 
       var resCols = [
-        { id: "season", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
-        { id: "round", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
-        { id: "driverid", dataType: tableau.dataTypeEnum.string },
+        { id: "season", alias: "F1 Season (R)", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
+        { id: "round", alias: "Round (R)", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
+        { id: "driverid", alias: "Driver ID (R)", dataType: tableau.dataTypeEnum.string },
         { id: "number", alias: "Driver Number", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
         { id: "code", alias: "Driver Code", dataType: tableau.dataTypeEnum.string },
         { id: "url", alias: "Driver URL", dataType: tableau.dataTypeEnum.string },
@@ -55,29 +56,29 @@
         { id: "fastestlaplap", alias: "Fastest Lap Lap", dataType: tableau.dataTypeEnum.int },
         { id: "fastestlaptime", alias: "Fastest Lap Time", dataType: tableau.dataTypeEnum.string },
         { id: "fastestlapavgspeed", alias: "Fastest Lap Avg Speed kph", dataType: tableau.dataTypeEnum.float },
-        { id: "consid", dataType: tableau.dataTypeEnum.string },
-        { id: "consname", alias: "Constructor", dataType: tableau.dataTypeEnum.string },
-        { id: "consnat", alias: "Constructor Nationality", dataType: tableau.dataTypeEnum.string },
-        { id: "consurl", alias: "Constructor Wiki URL", dataType: tableau.dataTypeEnum.string }
+        { id: "constructorid", alias:"Constructor ID", dataType: tableau.dataTypeEnum.string },
+        { id: "constructorname", alias: "Constructor", dataType: tableau.dataTypeEnum.string },
+        { id: "constructornat", alias: "Constructor Nationality", dataType: tableau.dataTypeEnum.string },
+        { id: "constructorurl", alias: "Constructor Wiki URL", dataType: tableau.dataTypeEnum.string }
       ];
 
       //The resSchema variable defines the schema for a the results table and contains a JavaScript object.
       //Here, the value of the  columns property is set to the resCols array defined earlier.
       var resSchema = {
           id: "f1results",
-          alias: "Formula 1 Season Results",
+          alias: "Formula 1 Season Race Results",
           columns: resCols
       };
 
       //Placeholder for development of qualifying results - cols array
       var qualCols = [
-        { id: "season", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
-        { id: "round", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
-        { id: "qauldate", alias: "Qualifying Date", dataType: tableau.dataTypeEnum.date },
-        { id: "driverid", dataType: tableau.dataTypeEnum.string },
-        { id: "q1time", alias: "Fastest Lap Time", dataType: tableau.dataTypeEnum.string },
-        { id: "q2time", alias: "Fastest Lap Time", dataType: tableau.dataTypeEnum.string },
-        { id: "q3time", alias: "Fastest Lap Time", dataType: tableau.dataTypeEnum.string }
+        { id: "season", alias: "F1 Season (Q)", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
+        { id: "round", alias: "Round (Q)", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
+        { id: "driverid", alias: "Driver ID (Q)", dataType: tableau.dataTypeEnum.string },
+        { id: "position", alias: "Qualifying Position", dataType: tableau.dataTypeEnum.int },
+        { id: "q1time", alias: "Fastest Q1 Lap Time", dataType: tableau.dataTypeEnum.string },
+        { id: "q2time", alias: "Fastest Q2 Lap Time", dataType: tableau.dataTypeEnum.string },
+        { id: "q3time", alias: "Fastest Q3 Lap Time", dataType: tableau.dataTypeEnum.string }
       ];
 
       //Placeholder for development of qualifying results - schema
@@ -147,6 +148,52 @@
     function getResultsPromise(table, yr){
       return new Promise(function(resolve, reject) {
         var qs = "http://ergast.com/api/f1/" + yr + "/results.json?limit=1000";
+        var qs2 = "http://ergast.com/api/f1/" + yr + "/qualifying.json?limit=1000";
+
+        if (table.tableInfo.id =="f1qual") {
+            var dat = $.ajax({
+              url: qs2,
+              dataType: 'json',
+              success: function(data){
+                var toRet =  [];
+
+                if (data.MRData.RaceTable.Races) {
+                  var x = 0;
+                  _.each(data.MRData.RaceTable.Races, function(qualracerec) {
+                    _.each(data.MRData.RaceTable.Races[x].QualifyingResults, function(qualdet){
+
+                      var q1, q2, q3;
+
+                      if ( "Q1" in qualdet ){ q1 = qualdet.Q1 }
+                      if ( "Q2" in qualdet ){ q2 = qualdet.Q2 }
+                      if ( "Q3" in qualdet ){ q3 = qualdet.Q3 }
+
+                      qualentry = {
+                        "season": qualracerec.season,
+                        "round": qualracerec.round,
+                        "driverid": qualdet.Driver.driverId,
+                        "position": qualdet.position,
+                        "q1time": q1,
+                        "q2time": q2,
+                        "q3time": q3
+                      };//qualentry
+                      toRet.push(qualentry)
+
+                    });//qualdet
+                    x++;
+                  });//each qualracerec
+
+                  table.appendRows(toRet);
+                  resolve();
+
+                }
+              }, //success
+              error: function(dat, ajaxOptions,thrownError){
+                  Promise.reject("Error retrieving data from the data provider;  " + thrownError);
+              }//error
+            });
+        }
+
         var dat = $.ajax({
             url: qs,
             dataType: 'json',
@@ -161,6 +208,7 @@
                           "round": racerecord.round,
                           "racename": racerecord.raceName,
                           "racedate": racerecord.date,
+                          "circuitid": racerecord.Circuit.circuitId,
                           "circuitname": racerecord.Circuit.circuitName,
                           "lat": racerecord.Circuit.Location.lat,
                           "lon": racerecord.Circuit.Location.long,
@@ -207,10 +255,10 @@
                             "fastestlaplap": fll,
                             "fastestlaptime": flt,
                             "fastestlapavgspeed": flas,
-                            "consid": resultsrecord.Constructor.constructorId,
-                            "consname": resultsrecord.Constructor.name,
-                            "consnat": resultsrecord.Constructor.nationality,
-                            "consurl": resultsrecord.Constructor.url
+                            "constructorid": resultsrecord.Constructor.constructorId,
+                            "constructorname": resultsrecord.Constructor.name,
+                            "constructornat": resultsrecord.Constructor.nationality,
+                            "constructorurl": resultsrecord.Constructor.url
                           };//resultentry
 
                           toRet.push(resultentry)
