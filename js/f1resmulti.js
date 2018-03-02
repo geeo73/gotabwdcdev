@@ -39,7 +39,7 @@
       var resCols = [
         { id: "season", alias: "F1 Season (R)", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
         { id: "round", alias: "Round (R)", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
-        { id: "driverid", alias: "Driver ID (R)", dataType: tableau.dataTypeEnum.string },
+        { id: "driverid", alias: "Driver ID", dataType: tableau.dataTypeEnum.string },
         { id: "number", alias: "Driver Number", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
         { id: "code", alias: "Driver Code", dataType: tableau.dataTypeEnum.string },
         { id: "url", alias: "Driver URL", dataType: tableau.dataTypeEnum.string },
