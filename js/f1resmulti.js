@@ -59,7 +59,8 @@
         { id: "fastestlaprank", alias: "Fastest Lap Rank", dataType: tableau.dataTypeEnum.int },
         { id: "fastestlaplap", alias: "Fastest Lap Lap", dataType: tableau.dataTypeEnum.int },
         { id: "fastestlaptime", alias: "Fastest Lap Time", dataType: tableau.dataTypeEnum.string },
-        { id: "avgspeedunits", alias: "Race Avg Speed Units", dataType: tableau.dataTypeEnum.string },
+        { id: "fastestlapavgspeedunits", alias: "Fastest Lap Avg Speed Units", dataType: tableau.dataTypeEnum.string },
+        { id: "fastestlapavgspeed", alias: "Fastest Lap Avg Speed", dataType: tableau.dataTypeEnum.float },
         { id: "avgspeed", alias: "Race Avg Speed", dataType: tableau.dataTypeEnum.float },        
         { id: "constructorid", alias:"Constructor ID", dataType: tableau.dataTypeEnum.string },
         { id: "constructorname", alias: "Constructor", dataType: tableau.dataTypeEnum.string },
@@ -233,18 +234,16 @@
 
                         _.each(data.MRData.RaceTable.Races[i].Results, function(resultsrecord){
 
-                          var rtms, flr, fll, flt, asp, ass;
+                          var rtms, flr, fll, flt, flasu, flass;
 
                           if ( "Time" in resultsrecord ){ rtms = resultsrecord.Time.millis }
                           if ( "FastestLap" in resultsrecord ) {
                             flr = resultsrecord.FastestLap.rank;
                             fll = resultsrecord.FastestLap.lap;
                             flt = resultsrecord.FastestLap.Time.time;
+                            flasu = resultsrecord.FastestLap.AverageSpeed.units;
+                            flass = resultsrecord.FastestLap.AverageSpeed.speed;
                            }
-                          if ( "AverageSpeed" in resultsrecord ) {
-                            asp = resultsrecord.AverageSpeed.units;
-                            ass = resultsrecord.AverageSpeed.speed;
-                          }
 
                           resultentry = {
                             "season": racerecord.season,
@@ -258,7 +257,7 @@
                             "dob": resultsrecord.Driver.dateOfBirth,
                             "nationality": resultsrecord.Driver.nationality,
                             "position": resultsrecord.position,
-                            "position": resultsrecord.positionText,
+                            "positiontext": resultsrecord.positionText,
                             "points": resultsrecord.points,
                             "grid": resultsrecord.grid,
                             "laps": resultsrecord.laps,
@@ -267,8 +266,8 @@
                             "fastestlaplap": flr,
                             "fastestlaplap": fll,
                             "fastestlaptime": flt,
-                            "avgspeedunits": asp,
-                            "avgspeedspeed": asp,
+                            "fastestlapavgspeedunits": flasu,
+                            "fastestlapavgspeed": flass,                        
                             "constructorid": resultsrecord.Constructor.constructorId,
                             "constructorname": resultsrecord.Constructor.name,
                             "constructornat": resultsrecord.Constructor.nationality,
