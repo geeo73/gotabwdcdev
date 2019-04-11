@@ -18,7 +18,9 @@
         { id: "season", alias: "F1 Season", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
         { id: "round", alias: "Round", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
         { id: "racename", alias: "Race", dataType: tableau.dataTypeEnum.string },
+        { id: "raceurl", alias: "Race Wiki URL", dataType: tableau.dataTypeEnum.string },
         { id: "racedate", alias: "Race Date", dataType: tableau.dataTypeEnum.date },
+        { id: "racestarttime", alias: "Race Start Time", dataType: tableau.dataTypeEnum.string },
         { id: "circuitid", alias: "Circuit ID", dataType: tableau.dataTypeEnum.string },
         { id: "circuitname", alias: "Ciruit Name", dataType: tableau.dataTypeEnum.string },
         { id: "lat", alias: "Circuit Latitude", columnRole: tableau.columnRoleEnum.dimension, dataType: tableau.dataTypeEnum.float },
@@ -42,20 +44,23 @@
         { id: "driverid", alias: "Driver ID", dataType: tableau.dataTypeEnum.string },
         { id: "number", alias: "Driver Number", columnRole: tableau.columnRoleEnum.dimension, columnType: tableau.columnTypeEnum.discrete, dataType: tableau.dataTypeEnum.int },
         { id: "code", alias: "Driver Code", dataType: tableau.dataTypeEnum.string },
-        { id: "url", alias: "Driver URL", dataType: tableau.dataTypeEnum.string },
+        { id: "url", alias: "Driver Wiki URL", dataType: tableau.dataTypeEnum.string },
         { id: "givenname", alias: "Driver Given Name", dataType: tableau.dataTypeEnum.string },
         { id: "familyname", alias: "Driver Family Name", dataType: tableau.dataTypeEnum.string },
         { id: "dob", alias: "Driver DoB", dataType: tableau.dataTypeEnum.date },
         { id: "nationality", alias: "Driver Nationality", dataType: tableau.dataTypeEnum.string },
         { id: "position", alias: "Finishing Position", dataType: tableau.dataTypeEnum.int },
+        { id: "positiontext", alias: "Finishing Position Text", tableau.dataTypeEnum.string  },
         { id: "points", alias: "Championship Points", dataType: tableau.dataTypeEnum.int },
         { id: "grid", alias: "Starting Grid Position", dataType: tableau.dataTypeEnum.int },
         { id: "laps", alias: "Laps", dataType: tableau.dataTypeEnum.int },
         { id: "status", alias: "Finishing Interval", dataType: tableau.dataTypeEnum.string },
         { id: "millis", alias: "Race Time ms", dataType: tableau.dataTypeEnum.float },
+        { id: "fastestlaprank", alias: "Fastest Lap Rank", dataType: tableau.dataTypeEnum.int },
         { id: "fastestlaplap", alias: "Fastest Lap Lap", dataType: tableau.dataTypeEnum.int },
         { id: "fastestlaptime", alias: "Fastest Lap Time", dataType: tableau.dataTypeEnum.string },
-        { id: "fastestlapavgspeed", alias: "Fastest Lap Avg Speed kph", dataType: tableau.dataTypeEnum.float },
+        { id: "avgspeedunits", alias: "Race Avg Speed Units", dataType: tableau.dataTypeEnum.string },
+        { id: "avgspeed", alias: "Race Avg Speed", dataType: tableau.dataTypeEnum.float },        
         { id: "constructorid", alias:"Constructor ID", dataType: tableau.dataTypeEnum.string },
         { id: "constructorname", alias: "Constructor", dataType: tableau.dataTypeEnum.string },
         { id: "constructornat", alias: "Constructor Nationality", dataType: tableau.dataTypeEnum.string },
@@ -207,7 +212,9 @@
                           "season": racerecord.season,
                           "round": racerecord.round,
                           "racename": racerecord.raceName,
+                          "raceurl": racerecord.url,
                           "racedate": racerecord.date,
+                          "racestarttime": racerecord.time,
                           "circuitid": racerecord.Circuit.circuitId,
                           "circuitname": racerecord.Circuit.circuitName,
                           "lat": racerecord.Circuit.Location.lat,
@@ -226,14 +233,18 @@
 
                         _.each(data.MRData.RaceTable.Races[i].Results, function(resultsrecord){
 
-                          var rtms, fll, flt, flas;
+                          var rtms, flr, fll, flt, asp, ass;
 
                           if ( "Time" in resultsrecord ){ rtms = resultsrecord.Time.millis }
                           if ( "FastestLap" in resultsrecord ) {
+                            flr = resultsrecord.FastestLap.rank;
                             fll = resultsrecord.FastestLap.lap;
                             flt = resultsrecord.FastestLap.Time.time;
-                            flas = resultsrecord.FastestLap.lap;
                            }
+                          if ( "AverageSpeed" in resultsrecord ) {
+                            asp = resultsrecord.AverageSpeed.units;
+                            ass = resultsrecord.AverageSpeed.speed;
+                          }
 
                           resultentry = {
                             "season": racerecord.season,
@@ -247,14 +258,17 @@
                             "dob": resultsrecord.Driver.dateOfBirth,
                             "nationality": resultsrecord.Driver.nationality,
                             "position": resultsrecord.position,
+                            "position": resultsrecord.positionText,
                             "points": resultsrecord.points,
                             "grid": resultsrecord.grid,
                             "laps": resultsrecord.laps,
                             "status": resultsrecord.status,
                             "millis": rtms,
+                            "fastestlaplap": flr,
                             "fastestlaplap": fll,
                             "fastestlaptime": flt,
-                            "fastestlapavgspeed": flas,
+                            "avgspeedunits": asp,
+                            "avgspeedspeed": asp,
                             "constructorid": resultsrecord.Constructor.constructorId,
                             "constructorname": resultsrecord.Constructor.name,
                             "constructornat": resultsrecord.Constructor.nationality,
