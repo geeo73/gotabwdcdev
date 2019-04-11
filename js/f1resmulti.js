@@ -50,7 +50,7 @@
         { id: "dob", alias: "Driver DoB", dataType: tableau.dataTypeEnum.date },
         { id: "nationality", alias: "Driver Nationality", dataType: tableau.dataTypeEnum.string },
         { id: "position", alias: "Finishing Position", dataType: tableau.dataTypeEnum.int },
-        { id: "positiontext", alias: "Finishing Position Text", tableau.dataTypeEnum.string  },
+        { id: "positiontext", alias: "Finishing Position Text", dataType: tableau.dataTypeEnum.string},
         { id: "points", alias: "Championship Points", dataType: tableau.dataTypeEnum.int },
         { id: "grid", alias: "Starting Grid Position", dataType: tableau.dataTypeEnum.int },
         { id: "laps", alias: "Laps", dataType: tableau.dataTypeEnum.int },
