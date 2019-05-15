@@ -28,8 +28,11 @@
         Ensure the values in <b>From</b> and <b>To</b> are in that range<br><br>
         Enter the start season (from)
         <input type="text" name="resstartyear" id="resstartyear" value="2016" style="width: 50px; text-align:center;" />
-        and end season (to)
-        <input type="text" name="resendyear" id="resendyear" value="2017" style="width: 50px; text-align:center;" />
+        and end season (to)        
+        <input type="text" name="resendyear" id="resendyear" style="width: 50px; text-align:center;" />
+        <script>
+            document.getElementById("resendyear").value = new Date().getFullYear();
+        </script>
       </div>
       <div>
         </br>
