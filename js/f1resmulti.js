@@ -39,10 +39,7 @@
       { id: "familyname", alias: "Driver Family Name (DS)", dataType: tableau.dataTypeEnum.string },
       { id: "dob", alias: "Driver DoB (DS)", dataType: tableau.dataTypeEnum.date },
       { id: "nationality", alias: "Driver Nationality (DS)", dataType: tableau.dataTypeEnum.string },
-      { id: "constructorid", alias:"Constructor ID (DS)", dataType: tableau.dataTypeEnum.string },
-      { id: "constructorname", alias: "Constructor (DS)", dataType: tableau.dataTypeEnum.string },
-      { id: "constructornat", alias: "Constructor Nationality (DS)", dataType: tableau.dataTypeEnum.string },
-      { id: "constructorurl", alias: "Constructor Wiki URL (DS)", dataType: tableau.dataTypeEnum.string }      
+      { id: "numteamsinseason", alias: "Driver Number Teams in Season", dataType: tableau.dataTypeEnum.int }
     ];
 
     var drvseasonstandingsSchema = {
@@ -323,10 +320,7 @@
                         "familyname": driverstandingrec.Driver.familyName,
                         "dob": driverstandingrec.Driver.dateOfBirth,
                         "nationality": driverstandingrec.Driver.nationality,
-                        "constructorid": driverstandingrec.Constructors[0].constructorId,
-                        "constructorname": driverstandingrec.Constructors[0].name,
-                        "constructornat": driverstandingrec.Constructors[0].nationality,
-                        "constructorurl": driverstandingrec.Constructors[0].url
+                        "numteamsinseason": driverstandingrec.Constructors.length
                     };//driverstandingentry
 
                     toRet.push(drvstandingentry)
